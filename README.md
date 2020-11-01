@@ -6,7 +6,7 @@ This is a [Moleculer](https://moleculer.services/)-based microservices project. 
 
 ## Usage
 
-Start the project with `yarn dev` command.
+Start the project with `npm run dev` command.
 After starting, open the http://localhost:3000/ URL in your browser.
 On the welcome page you can test the generated services via API Gateway and check the nodes & services.
 
@@ -24,11 +24,11 @@ In the terminal, try the following commands:
 -   Moleculer website: https://moleculer.services/
 -   Moleculer Documentation: https://moleculer.services/docs/0.14/
 
-## Yarn scripts
+## NPM scripts
 
--   `yarn dev`: Start development mode (load all services locally with hot-reload & REPL)
--   `yarn start`: Start production mode (set `SERVICES` env variable to load certain services)
--   `yarn cli`: Start a CLI and connect to production. Don't forget to set production namespace with `--ns` argument in script
--   `yarn lint`: Run ESLint
--   `yarn ci`: Run continuous test mode with watching
--   `yarn test`: Run tests & generate coverage report
+-   `npm run dev`: Start development mode (load all services locally with hot-reload & REPL)
+-   `npm run start`: Start production mode (set `SERVICES` env variable to load certain services)
+-   `npm run cli`: Start a CLI and connect to production. Don't forget to set production namespace with `--ns` argument in script
+-   `npm run lint`: Run ESLint
+-   `npm run ci`: Run continuous test mode with watching
+-   `npm run test`: Run tests & generate coverage report
