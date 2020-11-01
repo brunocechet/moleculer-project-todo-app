@@ -24,6 +24,7 @@
     "moleculer-repl": "^0.6.4"
   },
   "dependencies": {
+    "ioredis": "^4.19.2",
     "moleculer": "^0.14.10",
     "moleculer-db": "^0.8.4",
     "moleculer-db-adapter-mongo": "^0.4.7",

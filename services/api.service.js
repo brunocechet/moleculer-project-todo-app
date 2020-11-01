@@ -13,7 +13,7 @@ module.exports = {
     mixins: [ApiGateway],
     version: 1,
 
-    // dependencies: ['users'],
+    dependencies: ['users'],
 
     // More info about settings: https://moleculer.services/docs/0.14/moleculer-web.html
     settings: {
