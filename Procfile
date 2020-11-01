@@ -1,1 +1,1 @@
-web: moleculer-runner
+web: npm run dev
