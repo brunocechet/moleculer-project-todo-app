@@ -53,7 +53,7 @@ module.exports = {
 
     // Default log level for built-in console logger. It can be overwritten in logger options above.
     // Available values: trace, debug, info, warn, error, fatal
-    logLevel: 'debug',
+    logLevel: 'warn',
 
     // Define transporter.
     // More info: https://moleculer.services/docs/0.14/networking.html
@@ -129,7 +129,7 @@ module.exports = {
     // Settings of Circuit Breaker. More info: https://moleculer.services/docs/0.14/fault-tolerance.html#Circuit-Breaker
     circuitBreaker: {
         // Enable feature
-        enabled: true,
+        enabled: false,
         // Threshold value. 0.5 means that 50% should be failed for tripping.
         threshold: 0.5,
         // Minimum request count. Below it, CB does not trip.
