@@ -21,7 +21,7 @@ module.exports = {
         port: process.env.PORT || 3000,
 
         // Exposed IP
-        ip: '0.0.0.0',
+        ip: process.env.IP || '0.0.0.0',
 
         // Global Express middlewares. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Middlewares
         use: [],
@@ -29,7 +29,7 @@ module.exports = {
         // Global CORS settings for all routes
         cors: {
             // Configures the Access-Control-Allow-Origin CORS header.
-            origin: '*',
+            origin: process.env.ORIGIN || '*',
             // Configures the Access-Control-Allow-Methods CORS header.
             methods: ['GET', 'OPTIONS', 'POST', 'PUT', 'DELETE'],
             // Configures the Access-Control-Allow-Headers CORS header.
