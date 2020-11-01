@@ -41,31 +41,34 @@ module.exports = {
             // Using colors on the output
             colors: true,
             // Print module names with different colors (like docker-compose for containers)
-            moduleColors: false,
+            moduleColors: true,
             // Line formatter. It can be "json", "short", "simple", "full", a `Function` or a template string like "{timestamp} {level} {nodeID}/{mod}: {msg}"
             formatter: 'full',
             // Custom object printer. If not defined, it uses the `util.inspect` method.
             objectPrinter: null,
             // Auto-padding the module name in order to messages begin at the same column.
-            autoPadding: false,
+            autoPadding: true,
         },
     },
+
     // Default log level for built-in console logger. It can be overwritten in logger options above.
     // Available values: trace, debug, info, warn, error, fatal
-    logLevel: 'info',
+    logLevel: 'debug',
 
     // Define transporter.
     // More info: https://moleculer.services/docs/0.14/networking.html
     // Note: During the development, you don't need to define it because all services will be loaded locally.
     // In production you can set it via `TRANSPORTER=nats://localhost:4222` environment variable.
-    transporter: {
-        logger: true,
-        type: 'TCP',
-    },
+    // transporter: 'TCP',
 
     // Define a cacher.
     // More info: https://moleculer.services/docs/0.14/caching.html
-    cacher: null,
+    cacher: {
+        type: 'memory',
+        options: {
+            ttl: 30, // 30 seconds
+        },
+    },
 
     // Define a serializer.
     // Available values: "JSON", "Avro", "ProtoBuf", "MsgPack", "Notepack", "Thrift".
@@ -82,9 +85,9 @@ module.exports = {
         // Count of retries
         retries: 5,
         // First delay in milliseconds.
-        delay: 100,
+        delay: 200,
         // Maximum delay in milliseconds.
-        maxDelay: 1000,
+        maxDelay: 2000,
         // Backoff factor for delay. 2 means exponential backoff.
         factor: 2,
         // A function to check failed requests.
@@ -96,6 +99,7 @@ module.exports = {
 
     // Number of seconds to send heartbeat packet to other nodes.
     heartbeatInterval: 10,
+
     // Number of seconds to wait before setting node to unavailable status.
     heartbeatTimeout: 30,
 
@@ -105,9 +109,9 @@ module.exports = {
     // Tracking requests and waiting for running requests before shuting down. More info: https://moleculer.services/docs/0.14/context.html#Context-tracking
     tracking: {
         // Enable feature
-        enabled: false,
+        enabled: true,
         // Number of milliseconds to wait before shuting down the process.
-        shutdownTimeout: 5000,
+        shutdownTimeout: 10 * 1000,
     },
 
     // Disable built-in request & emit balancer. (Transporter must support it, as well.). More info: https://moleculer.services/docs/0.14/networking.html#Disabled-balancer
