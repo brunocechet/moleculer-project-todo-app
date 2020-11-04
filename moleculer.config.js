@@ -1,35 +1,10 @@
 'use strict';
 
-/**
- * Moleculer ServiceBroker configuration file
- *
- * More info about options:
- *     https://moleculer.services/docs/0.14/configuration.html
- *
- *
- * Overwriting options in production:
- * ================================
- * 	You can overwrite any option with environment variables.
- * 	For example to overwrite the "logLevel" value, use `LOGLEVEL=warn` env var.
- * 	To overwrite a nested parameter, e.g. retryPolicy.retries, use `RETRYPOLICY_RETRIES=10` env var.
- *
- * 	To overwrite broker’s deeply nested default options, which are not presented in "moleculer.config.js",
- * 	use the `MOL_` prefix and double underscore `__` for nested properties in .env file.
- * 	For example, to set the cacher prefix to `MYCACHE`, you should declare an env var as `MOL_CACHER__OPTIONS__PREFIX=mycache`.
- *  It will set this:
- *  {
- *    cacher: {
- *      options: {
- *        prefix: "mycache"
- *      }
- *    }
- *  }
- */
 module.exports = {
     // Namespace of nodes to segment your nodes on the same network.
     namespace: 'todo-app',
     // Unique node identifier. Must be unique in a namespace.
-    nodeID: 'root',
+    nodeID: 'todo-app-' + process.pid,
     // Custom metadata store. Store here what you want. Accessing: `this.broker.metadata`
     metadata: {},
 
@@ -53,16 +28,10 @@ module.exports = {
 
     // Default log level for built-in console logger. It can be overwritten in logger options above.
     // Available values: trace, debug, info, warn, error, fatal
-    logLevel: 'warn',
+    logLevel: 'info',
 
-    // Define transporter.
-    // More info: https://moleculer.services/docs/0.14/networking.html
-    // Note: During the development, you don't need to define it because all services will be loaded locally.
-    // In production you can set it via `TRANSPORTER=nats://localhost:4222` environment variable.
-    transporter: 'TCP',
+    transporter: process.env.REDIS_URL || 'TCP',
 
-    // Define a cacher.
-    // More info: https://moleculer.services/docs/0.14/caching.html
     cacher: {
         type: 'memory',
         options: {
@@ -70,12 +39,8 @@ module.exports = {
         },
     },
 
-    // Define a serializer.
-    // Available values: "JSON", "Avro", "ProtoBuf", "MsgPack", "Notepack", "Thrift".
-    // More info: https://moleculer.services/docs/0.14/networking.html#Serialization
     serializer: 'JSON',
 
-    // Number of milliseconds to wait before reject a request with a RequestTimeout error. Disabled: 0
     requestTimeout: 10 * 1000,
 
     // Retry policy settings. More info: https://moleculer.services/docs/0.14/fault-tolerance.html#Retry
@@ -114,22 +79,19 @@ module.exports = {
         shutdownTimeout: 10 * 1000,
     },
 
+    hotReload: true,
+
     // Disable built-in request & emit balancer. (Transporter must support it, as well.). More info: https://moleculer.services/docs/0.14/networking.html#Disabled-balancer
     disableBalancer: false,
 
-    // Settings of Service Registry. More info: https://moleculer.services/docs/0.14/registry.html
     registry: {
-        // Define balancing strategy. More info: https://moleculer.services/docs/0.14/balancing.html
-        // Available values: "RoundRobin", "Random", "CpuUsage", "Latency", "Shard"
-        strategy: 'RoundRobin',
-        // Enable local action call preferring. Always call the local action instance if available.
-        preferLocal: true,
+        discoverer: process.env.REDIS_URL || 'Local',
     },
 
     // Settings of Circuit Breaker. More info: https://moleculer.services/docs/0.14/fault-tolerance.html#Circuit-Breaker
     circuitBreaker: {
         // Enable feature
-        enabled: false,
+        enabled: true,
         // Threshold value. 0.5 means that 50% should be failed for tripping.
         threshold: 0.5,
         // Minimum request count. Below it, CB does not trip.
@@ -145,7 +107,7 @@ module.exports = {
     // Settings of bulkhead feature. More info: https://moleculer.services/docs/0.14/fault-tolerance.html#Bulkhead
     bulkhead: {
         // Enable feature.
-        enabled: false,
+        enabled: true,
         // Maximum concurrent executions.
         concurrency: 10,
         // Maximum size of queue
@@ -188,11 +150,13 @@ module.exports = {
     replCommands: null,
 
     // Called after broker created.
-    created(broker) {},
+    created() {},
 
     // Called after broker started.
-    async started(broker) {},
+    async started(broker) {
+        broker.repl();
+    },
 
     // Called after broker stopped.
-    async stopped(broker) {},
+    async stopped() {},
 };
